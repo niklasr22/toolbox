@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dual Color Picker</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            transition: background-color 0.3s;
+        }
+
+        .color-box {
+            width: 200px;
+            height: 200px;
+            transition: background-color 0.3s;
+        }
+
+        .controls {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+        }
+
+        .control-group {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="controls">
+        <div class="control-group">
+            <label for="bg-color-picker">Background Color:</label>
+            <input type="color" id="bg-color-picker">
+            <input type="text" id="bg-color-hex" placeholder="#000000">
+        </div>
+        <div class="control-group">
+            <label for="box-color-picker">Box Color:</label>
+            <input type="color" id="box-color-picker">
+            <input type="text" id="box-color-hex" placeholder="#ffffff">
+        </div>
+    </div>
+    <div class="color-box"></div>
+
+    <script>
+        const bgColorPicker = document.getElementById('bg-color-picker');
+        const bgColorHex = document.getElementById('bg-color-hex');
+        const boxColorPicker = document.getElementById('box-color-picker');
+        const boxColorHex = document.getElementById('box-color-hex');
+        const colorBox = document.querySelector('.color-box');
+
+        function updateBackgroundColor(color) {
+            document.body.style.backgroundColor = color;
+        }
+
+        function updateBoxColor(color) {
+            colorBox.style.backgroundColor = color;
+        }
+
+        bgColorPicker.addEventListener('input', (e) => {
+            const color = e.target.value;
+            bgColorHex.value = color;
+            updateBackgroundColor(color);
+        });
+
+        bgColorHex.addEventListener('input', (e) => {
+            const color = e.target.value;
+            bgColorPicker.value = color;
+            updateBackgroundColor(color);
+        });
+
+        boxColorPicker.addEventListener('input', (e) => {
+            const color = e.target.value;
+            boxColorHex.value = color;
+            updateBoxColor(color);
+        });
+
+        boxColorHex.addEventListener('input', (e) => {
+            const color = e.target.value;
+            boxColorPicker.value = color;
+            updateBoxColor(color);
+        });
+    </script>
+</body>
+
+</html>
