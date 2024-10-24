@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Printed pandas Dataframe to Python</title>
+    <link rel="stylesheet" href="./style.css">
+    <style>
+    </style>
+</head>
+
+<body>
+    <div>
+        <a href="./index.html">Back</a>
+        <h1>Printed pandas Dataframe to Python</h1>
+        <textarea oninput="toPython()" placeholder="Enter your printed pandas DataFrame:&#10;   a  b&#10;0  a  4&#10;1  b  5&#10;2  3  6" style="min-height: 300px; width: 100%"></textarea>
+    </div>
+    <div id="python-code" style="font-family: monospace;"></div>
+    <script>
+        
+        function toPython() {
+            const text = document.querySelector('textarea').value;
+            const lines = text.split('\n');
+            
+            const cols = lines[0].split(/\s*/).map(x => x.trim()).filter(x => x.length > 0);
+            const data = Object.fromEntries(cols.map(col => [col, []]));
+
+            lines.slice(1).forEach(line => {
+                const values = line.split("  ").map(x => x.trim()).filter(x => x.length > 0).slice(1);
+                cols.forEach((col, i) => {
+                    data[col].push(values[i]);
+                });
+            });
+
+            cols.forEach(col => {
+                const anyNonNumeric = data[col].some(x => isNaN(parseFloat(x)));
+                if (!anyNonNumeric) {
+                    data[col] = data[col].map(x => parseFloat(x));
+                }
+            });
+            
+            
+            console.log(cols);
+
+            const pythonCode = `df = pd.DataFrame(${JSON.stringify(data)})`;
+            document.getElementById('python-code').textContent = pythonCode;
+        }
+    </script>
+</body>
+
+</html>
