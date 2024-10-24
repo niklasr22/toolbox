@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multiline text to Python list</title>
+    <link rel="stylesheet" href="./style.css">
+    <style>
+    </style>
+</head>
+
+<body>
+    <div>
+        <a href="./index.html">Back</a>
+        <h1>Multiline text to Python list</h1>
+        <textarea oninput="multilineTextToList()" placeholder="Enter your multiline text:&#10;0.123&#10;40.234" style="min-height: 300px; width: 100%"></textarea>
+    </div>
+    <div id="python-code" style="font-family: monospace;"></div>
+    <script>
+
+        function multilineTextToList() {
+            const text = document.querySelector('textarea').value;
+            const lines = text.trim().split('\n');
+            let list = lines.map(line => {
+                return line.trim();
+            });
+
+            const anyNonNumeric = list.some(x => isNaN(parseFloat(x)));
+            
+            if (anyNonNumeric) {
+                list = list.map(x => `'${x}'`);
+            }
+            
+
+            document.getElementById('python-code').innerText = `[${list.join(', ')}]`;
+        }
+    </script>
+</body>
+
+</html>
